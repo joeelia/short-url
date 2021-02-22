@@ -399,7 +399,7 @@ class Builder
      * @return ShortURL
      * @throws ShortURLException
      */
-    public function make(): ShortURL
+    public function make($domain): ShortURL
     {
         if (! $this->destinationUrl) {
             throw new ShortURLException('No destination URL has been set.');
@@ -409,7 +409,7 @@ class Builder
 
         $this->checkKeyDoesNotExist();
 
-        $shortURL = $this->insertShortURLIntoDatabase();
+        $shortURL = $this->insertShortURLIntoDatabase($domain);
 
         $this->resetOptions();
 
@@ -421,11 +421,11 @@ class Builder
      *
      * @return ShortURL
      */
-    protected function insertShortURLIntoDatabase(): ShortURL
+    protected function insertShortURLIntoDatabase($domain): ShortURL
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/short/'.$this->urlKey,
+            'default_short_url'              => $domain.'/'.$this->urlKey,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'track_visits'                   => $this->trackVisits,
