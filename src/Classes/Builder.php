@@ -332,6 +332,58 @@ class Builder
         return $this;
     }
 
+     /**
+     * Explicitly set a URL key for this short URL.
+     *
+     * @param  string  $key
+     * @return $this
+     */
+    public function teamId(string $key): self
+    {
+        $this->teamId = $key;
+
+        return $this;
+    }
+
+     /**
+     * Explicitly set a URL key for this short URL.
+     *
+     * @param  string  $key
+     * @return $this
+     */
+    public function domainId(string $key): self
+    {
+        $this->domainId = $key;
+
+        return $this;
+    }
+
+     /**
+     * Explicitly set a URL key for this short URL.
+     *
+     * @param  string  $key
+     * @return $this
+     */
+    public function targeting(string $key): self
+    {
+        $this->targeting = $key;
+
+        return $this;
+    }
+
+      /**
+     * Explicitly set a URL key for this short URL.
+     *
+     * @param  string  $key
+     * @return $this
+     */
+    public function isActive(string $key): self
+    {
+        $this->isActive = $key;
+
+        return $this;
+    }
+
     /**
      * Override the HTTP status code that will be used
      * for redirecting the visitor.
@@ -425,7 +477,11 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => $domain.'/'.$this->urlKey,
+            'default_short_url'              => $domain.'/'.config('short-url.short').$this->urlKey,
+            'team_id'                        => $this->teamId,
+            'domain_id'                      => $this->domainId,
+            'is_active'                      => $this->isActive,
+            'targeting'                      => $this->targeting,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'track_visits'                   => $this->trackVisits,
